@@ -75,7 +75,7 @@ for myline in inlines[args.firstRow:args.lastRow]:
     print('Line, Answer: %s, %s'%(myline,answer))        
 
 with open('search_lines%sto%s.csv'%(str(args.firstRow),str(args.lastRow)), 'w') as fout:
-    
+    fout.write('%s,ClassFromCrawler\n'%(inlines[0]))
     for l,t in zip(inlines[args.firstRow:args.lastRow],result):
         fout.write('%s,%s\n'%(l,t))
 
