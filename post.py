@@ -16,7 +16,7 @@ parser.add_argument("--firstRow", type=int,
                     help="first row to be considered in the input file", default=1)
 parser.add_argument("--lastRow", type=int, 
                     help="last row to be considered in the input file", default=11)
-
+args = parser.parse_args()
 url = "http://cti.voa.gov.uk/cti/inits.asp"
 fin_name = 'PricePaidVittorio.csv'
 inlines = []
@@ -24,7 +24,7 @@ with open(fin_name, 'r') as fin:
     inlines = fin.readlines()
 
 result=[]
-for myline in inlines[1:]:
+for myline in inlines[args.firstRow:args.lastRow]:
     myline = myline.replace('"','').split(',')
     print(myline)
     postcode = myline[3]#'SE1 0AJ'
