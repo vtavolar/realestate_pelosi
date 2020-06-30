@@ -72,23 +72,24 @@ for myline in inlines[args.firstRow:args.lastRow]:
             print(myline[7])
             answer=t[1]
             break
-    if answer=='notFound':
-        #if still not found, compare to PAON
-        if t[0].split(',')[0] == myline[8]:
-            print(t[0])
-            print(myline[8])
-            answer=t[1]
-            break
-    if answer=='notFound':
-        #if still again not found, allow partial match to SAON
-        if t[0].split(',')[0] in myline[8]:
-            print(t[0])
-            print(myline[8])
-            answer=t[1]
-            break        
+        if answer=='notFound':
+            #if still not found, compare to PAON
+            if t[0].split(',')[0] == myline[8]:
+                print(t[0])
+                print(myline[8])
+                answer=t[1]
+                break
+        if answer=='notFound':
+            #if still again not found, allow partial match to SAON
+            if t[0].split(',')[0] in myline[8]:
+                print(t[0])
+                print(myline[8])
+                answer=t[1]
+                break        
     result.append(answer)
     print('Line, Answer: %s, %s'%(myline,answer))        
-
+    print()
+    
 with open('search_lines%sto%s.csv'%(str(args.firstRow),str(args.lastRow)), 'w') as fout:
     fout.write('%s,"ClassFromCrawler"\n'%(inlines[0].replace('\n','')))
     for l,t in zip(inlines[args.firstRow:args.lastRow],result):
