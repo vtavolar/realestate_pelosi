@@ -79,6 +79,13 @@ for myline in inlines[args.firstRow:args.lastRow]:
             print(myline[8])
             answer=t[1]
             break
+    if answer=='notFound':
+        #if still again not found, allow partial match to SAON
+        if t[0].split(',')[0] in myline[8]:
+            print(t[0])
+            print(myline[8])
+            answer=t[1]
+            break        
     result.append(answer)
     print('Line, Answer: %s, %s'%(myline,answer))        
 
