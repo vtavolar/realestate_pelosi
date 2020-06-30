@@ -66,20 +66,22 @@ for myline in inlines[args.firstRow:args.lastRow]:
 	
     answer='notFound'
     for t in res:
-        #compare to SAON
+        #compare to PAON
         if t[0].split(',')[0] == myline[7]:
             print(t[0])
             print(myline[7])
             answer=t[1]
             break
-        if answer=='notFound':
-            #if still not found, compare to PAON
+    if answer=='notFound':
+        for t in res:
+            #if still not found, compare to SAON
             if t[0].split(',')[0] == myline[8]:
                 print(t[0])
                 print(myline[8])
                 answer=t[1]
                 break
-        if answer=='notFound':
+    if answer=='notFound':
+        for t in res:
             #if still again not found, allow partial match to SAON
             if t[0].split(',')[0] in myline[8]:
                 print(t[0])
