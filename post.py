@@ -71,10 +71,13 @@ for myline in inlines[args.firstRow:args.lastRow]:
             print(myline[7])
             answer=t[1]
             break
+    result.append(answer)
     print('Line, Answer: %s, %s'%(myline,answer))        
-	#with open('search_%s.csv'%postcode, 'w') as fout:
-	#    for t in res:
-	#        fout.write('%s,%s,%s\n'%(t[0].replace(',',''),t[1],t[2]))
+
+with open('search_lines%sto%s.csv'%(str(args.firstRow),str(args.lastRow)), 'w') as fout:
+    
+    for l,t in zip(inlines[args.firstRow:args.lastRow],result):
+        fout.write('%s,%s\n'%(l,t))
 
 
 
