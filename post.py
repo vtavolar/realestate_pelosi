@@ -18,7 +18,7 @@ parser.add_argument("--lastRow", type=int,
                     help="last row to be considered in the input file", default=11)
 args = parser.parse_args()
 url = "http://cti.voa.gov.uk/cti/inits.asp"
-fin_name = 'PricePaidVittorio.csv'
+fin_name = args.infile
 inlines = []
 with open(fin_name, 'r') as fin:
     inlines = fin.readlines()
@@ -59,6 +59,12 @@ for myline in inlines[args.firstRow:args.lastRow]:
         oldtext = oldtext.replace('  ',' ')
     lines = oldtext.split('\n')
     res=[]
+    if 'Local authority name' in oldtext:
+      answer='notFound'
+      result.append(answer)
+      print('Line, Answer: %s, %s'%(myline,answer))        
+      print()   
+      continue  
     for line in lines:
         ls = line.split(' ')
         t = (' '.join(ls[:-2]), ls[-2], ls[-1])
