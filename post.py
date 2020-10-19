@@ -42,7 +42,7 @@ for myline in inlines[args.firstRow:args.lastRow]:
             driver.execute_script('arguments[0].value = arguments[1]', txtPC, postcode)
             driver.find_element_by_id('frmInitSForm').submit()
             scl_complex = driver.find_element_by_class_name('scl_complex')
-          except selenium.common.exceptions.TimeoutException:
+        except selenium.common.exceptions.TimeoutException:
               break
     oldtext = scl_complex.text if 'scl_complex' in locals() else ''
     if oldtext == '':
