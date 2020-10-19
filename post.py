@@ -35,15 +35,15 @@ for myline in inlines[args.firstRow:args.lastRow]:
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument('--disable-dev-shm-usage')
     driver = webdriver.Chrome("chromedriver", chrome_options=chrome_options)#, options=options)
-    while True:
-        try:
-            driver.get(url)
-            txtPC = driver.find_element_by_name("txtPostCode")
-            driver.execute_script('arguments[0].value = arguments[1]', txtPC, postcode)
-            driver.find_element_by_id('frmInitSForm').submit()
-            scl_complex = driver.find_element_by_class_name('scl_complex')
-        except selenium.common.exceptions.TimeoutException:
-              break
+    try:
+        driver.get(url)
+        txtPC = driver.find_element_by_name("txtPostCode")
+        driver.execute_script('arguments[0].value = arguments[1]', txtPC, postcode)
+        driver.find_element_by_id('frmInitSForm').submit()
+        scl_complex = driver.find_element_by_class_name('scl_complex')
+    except selenium.common.exceptions.TimeoutException:
+        print('[ERROR] Driver connection timed out. No response in time for this entry, moving to the next one...')
+        driver.close()
     oldtext = scl_complex.text if 'scl_complex' in locals() else ''
     if oldtext == '':
         answer='notFound'
