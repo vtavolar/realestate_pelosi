@@ -34,18 +34,23 @@ for myline in inlines[args.firstRow:args.lastRow]:
     chrome_options.add_argument('--headless')
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument('--disable-dev-shm-usage')
-    #options = webdriver.ChromeOptions()
-    #options.add_argument("--remote-debugging-port=9222")
-    #options.headless = True
     driver = webdriver.Chrome("chromedriver", chrome_options=chrome_options)#, options=options)
-    driver.get(url)
-    txtPC = driver.find_element_by_name("txtPostCode")
-    driver.execute_script('arguments[0].value = arguments[1]', txtPC, postcode)
-    driver.find_element_by_id('frmInitSForm').submit()
-    scl_complex = driver.find_element_by_class_name('scl_complex')
-    oldtext = scl_complex.text
-    #print(oldtext)
-    newtext = ""
+    while True:
+        try:
+            driver.get(url)
+            txtPC = driver.find_element_by_name("txtPostCode")
+            driver.execute_script('arguments[0].value = arguments[1]', txtPC, postcode)
+            driver.find_element_by_id('frmInitSForm').submit()
+            scl_complex = driver.find_element_by_class_name('scl_complex')
+          except selenium.common.exceptions.TimeoutException:
+              break
+    oldtext = scl_complex.text if 'scl_complex' in locals() else ''
+    if oldtext == '':
+        answer='notFound'
+        result.append(answer)
+        print('Line, Answer: %s, %s'%(myline,answer))
+        print()
+        continue
     while True:
         try:
             a = driver.execute_script("Next();")
