@@ -41,8 +41,8 @@ for il,myline in enumerate(inlines[args.firstRow:args.lastRow]):
     chrome_options.add_argument('--headless')
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument('--disable-dev-shm-usage')
-    driver = webdriver.Chrome("chromedriver", chrome_options=chrome_options)#, options=options)
     try:
+        driver = webdriver.Chrome("chromedriver", chrome_options=chrome_options)#, options=options)
         driver.get(url)
         txtPC = driver.find_element_by_name("txtPostCode")
         driver.execute_script('arguments[0].value = arguments[1]', txtPC, postcode)
