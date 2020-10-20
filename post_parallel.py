@@ -1,6 +1,4 @@
 import urllib
-import selenium
-from selenium import webdriver
 import argparse
 import sys
 import os

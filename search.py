@@ -1,3 +1,6 @@
+import selenium
+from selenium import webdriver
+
 def searchLine(myline, url="http://cti.voa.gov.uk/cti/inits.asp"):
 #    #print progress bar
 #    os.system("clear")
