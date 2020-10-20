@@ -4,6 +4,7 @@ from selenium import webdriver
 import argparse
 import sys
 import os
+import time
 
 parser = argparse.ArgumentParser()
 parser.add_argument("infile", type=str,
@@ -22,12 +23,13 @@ with open(fin_name, 'r') as fin:
 nlines = len(inlines[args.firstRow:args.lastRow])
 
 result=[]
+startT = time.time()
 for il,myline in enumerate(inlines[args.firstRow:args.lastRow]):
     #print progress bar
     os.system("clear")
     progress = float(il+1)/float(nlines)*100
     sys.stdout.write('\r')
-    sys.stdout.write("[%-20s] %.2f%%, %i/%i" % ('='*int((il+1)*20/(nlines)), progress, il+1, nlines))
+    sys.stdout.write("[%-20s] %.2f%%, %i/%i, %is elapsed." % ('='*int((il+1)*20/(nlines)), progress, il+1, nlines, time.time()-startT))
     sys.stdout.flush()
     print()  
     myline = myline.replace('"','').split(',')
