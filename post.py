@@ -1,17 +1,13 @@
 import urllib
-#import urllib2
-#import requests
-#from bs4 import BeautifulSoup
 import selenium
 from selenium import webdriver
-#from .firefox.webdriver import WebDriver as Firefox
 import argparse
+import sys
+import os
 
 parser = argparse.ArgumentParser()
 parser.add_argument("infile", type=str,
                     help="input xlsx file")
-#parser.add_argument("--nqueries", type=int, 
-#                    help="number of lines to be read from input file", default=10)
 parser.add_argument("--firstRow", type=int, 
                     help="first row to be considered in the input file", default=1)
 parser.add_argument("--lastRow", type=int, 
@@ -23,8 +19,17 @@ inlines = []
 with open(fin_name, 'r') as fin:
     inlines = fin.readlines()
 
+nlines = len(inlines[args.firstRow:args.lastRow])
+
 result=[]
-for myline in inlines[args.firstRow:args.lastRow]:
+for il,myline in enumerate(inlines[args.firstRow:args.lastRow]):
+    #print progress bar
+    os.system("clear")
+    progress = float(il+1)/float(nlines)*100
+    sys.stdout.write('\r')
+    sys.stdout.write("[%-20s] %.2f%%, %i/%i" % ('='*int((il+1)*20/(nlines)), progress, il+1, nlines))
+    sys.stdout.flush()
+    print()  
     myline = myline.replace('"','').split(',')
     print(myline)
     postcode = myline[3]#'SE1 0AJ'
