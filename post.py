@@ -50,7 +50,9 @@ for il,myline in enumerate(inlines[args.firstRow:args.lastRow]):
         scl_complex = driver.find_element_by_class_name('scl_complex')
     except:# selenium.common.exceptions.TimeoutException:
         print('[ERROR] Something went wrong with this research. No response obtained for this entry, moving to the next one...')
-        driver.close()
+        if 'driver' in locals():
+            driver.close()
+        continue
     oldtext = scl_complex.text if 'scl_complex' in locals() else ''
     if oldtext == '':
         answer='notFound'
