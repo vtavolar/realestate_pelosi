@@ -27,7 +27,7 @@ nlines = len(inlines[args.firstRow:args.lastRow])
 result=[]
 startT = time.time()
 pool = multiprocessing.Pool(4)
-result  = pool.map(searchLine, inlines[args.firstRow:args.lastRow])
+result  = pool.map(wrapSearchLine, inlines[args.firstRow:args.lastRow])
 #for il,myline in enumerate(inlines[args.firstRow:args.lastRow]):
 
     

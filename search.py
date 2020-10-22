@@ -1,5 +1,6 @@
 import selenium
 from selenium import webdriver
+import time
 
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument('--headless')
@@ -23,7 +24,7 @@ def searchLine(myline, url="http://cti.voa.gov.uk/cti/inits.asp", chrome_options
     except:# selenium.common.exceptions.TimeoutException:
         print('[ERROR] Something went wrong with this research. No response obtained for this entry, moving to the next one...')
         if 'driver' in locals():
-            driver.close()
+            driver.quit()
         return 'err'
     oldtext = scl_complex.text if 'scl_complex' in locals() else ''
     if oldtext == '':
@@ -40,7 +41,7 @@ def searchLine(myline, url="http://cti.voa.gov.uk/cti/inits.asp", chrome_options
             except:
                 print('[ERROR] Something went wrong with this research. No response obtained for this entry, moving to the next one...')
                 if 'driver' in locals():
-                    driver.close()
+                    driver.quit()
                 return 'err'
         except selenium.common.exceptions.JavascriptException:
             break
@@ -89,3 +90,19 @@ def searchLine(myline, url="http://cti.voa.gov.uk/cti/inits.asp", chrome_options
     print('Line, Answer: %s, %s'%(myline,answer))        
     print()
     return answer
+
+
+def wrapSearchLine(myline, url="http://cti.voa.gov.uk/cti/inits.asp", chrome_options=chrome_options, sleep=30, maxRetries=3):
+    retries=0
+    ret=''
+    while retries<maxRetries:
+        ret = searchLine(myline, url, chrome_options)
+        if ret == 'err':
+            retries=retries+1
+            print('Research of this entry caused an error. Waiting %ss before trying again with attempt n.%s'%(sleep,retries))
+            time.sleep(30)
+        else:
+            break
+    return ret
+    
+    
