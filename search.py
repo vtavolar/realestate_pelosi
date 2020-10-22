@@ -27,9 +27,10 @@ def searchLine(myline, url="http://cti.voa.gov.uk/cti/inits.asp", chrome_options
         return 'err'
     oldtext = scl_complex.text if 'scl_complex' in locals() else ''
     if oldtext == '':
+        answer='err'
         print('Line, Answer: %s, %s'%(myline,answer))
         print()
-        return 'err'
+        return answer
     while True:
         try:
             a = driver.execute_script("Next();")
@@ -50,9 +51,10 @@ def searchLine(myline, url="http://cti.voa.gov.uk/cti/inits.asp", chrome_options
     lines = oldtext.split('\n')
     res=[]
     if 'Local authority name' in oldtext:
-      print('Line, Answer: %s, %s'%(myline,answer))        
-      print()   
-      return 'notFound'
+        answer='notFound'
+        print('Line, Answer: %s, %s'%(myline,answer))        
+        print()   
+        return answer
     for line in lines:
         ls = line.split(' ')
         if len(ls) == 4: ##if present, ignore 'Improvement indicator' field
