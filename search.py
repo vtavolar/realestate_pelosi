@@ -1,23 +1,18 @@
 import selenium
 from selenium import webdriver
 
-def searchLine(myline, url="http://cti.voa.gov.uk/cti/inits.asp"):
-#    #print progress bar
-#    os.system("clear")
-#    progress = float(il+1)/float(nlines)*100
-#    sys.stdout.write('\r')
-#    sys.stdout.write("[%-20s] %.2f%%, %i/%i, %is elapsed." % ('='*int((il+1)*20/(nlines)), progress, il+1, nlines, time.time()-startT))
-#    sys.stdout.flush()
-#    print()  
+chrome_options = webdriver.ChromeOptions()
+chrome_options.add_argument('--headless')
+chrome_options.add_argument('--no-sandbox')
+chrome_options.add_argument('--disable-dev-shm-usage')
+
+
+def searchLine(myline, url="http://cti.voa.gov.uk/cti/inits.asp", chrome_options=chrome_options):
     myline = myline.replace('"','').split(',')
     print(myline)
     postcode = myline[3]#'SE1 0AJ'
     address = ' '.join(myline[7:10])
     print(address)
-    chrome_options = webdriver.ChromeOptions()
-    chrome_options.add_argument('--headless')
-    chrome_options.add_argument('--no-sandbox')
-    chrome_options.add_argument('--disable-dev-shm-usage')
     try:
         driver = webdriver.Chrome("chromedriver", chrome_options=chrome_options)#, options=options)
         driver.get(url)
@@ -60,6 +55,8 @@ def searchLine(myline, url="http://cti.voa.gov.uk/cti/inits.asp"):
       return 'notFound'
     for line in lines:
         ls = line.split(' ')
+        if len(ls) == 4: ##if present, ignore 'Improvement indicator' field
+            ls.pop(2)
         t = (' '.join(ls[:-2]), ls[-2], ls[-1])
         res.append(t)
 	
