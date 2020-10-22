@@ -14,7 +14,7 @@ parser.add_argument("--lastRow", type=int,
                     help="last row to be considered in the input file", default=11)
 args = parser.parse_args()
 
-from search import searchLine
+from search import wrapSearchLine
 
 url = "http://cti.voa.gov.uk/cti/inits.asp"
 fin_name = args.infile
