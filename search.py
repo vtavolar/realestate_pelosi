@@ -38,8 +38,14 @@ def searchLine(myline, url="http://cti.voa.gov.uk/cti/inits.asp"):
     while True:
         try:
             a = driver.execute_script("Next();")
-            scl_complex = driver.find_element_by_class_name('scl_complex')
-            oldtext = oldtext +'\n'+ scl_complex.text
+            try:
+                scl_complex = driver.find_element_by_class_name('scl_complex')
+                oldtext = oldtext +'\n'+ scl_complex.text
+            except:
+                print('[ERROR] Something went wrong with this research. No response obtained for this entry, moving to the next one...')
+                if 'driver' in locals():
+                    driver.close()
+                return 'err'
         except selenium.common.exceptions.JavascriptException:
             break
     driver.quit()
