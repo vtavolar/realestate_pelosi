@@ -57,14 +57,8 @@ def searchLine(myline, url="http://cti.voa.gov.uk/cti/inits.asp", chrome_options
         return answer
     for line in lines:
         ls = line.split(' ')
-        print('line before if')
-        print(ls)
-        if len(ls) == 4: ##if present, ignore 'Improvement indicator' field
-            print('line with four elements')
-            print(ls)
-            ls.pop(2)
-            print('line after pop')
-            print(ls)
+        if ls[-2] == 'Yes': ##if present, ignore 'Improvement indicator' field
+            ls.pop(-2)
         t = (' '.join(ls[:-2]), ls[-2], ls[-1])
         res.append(t)
 	
