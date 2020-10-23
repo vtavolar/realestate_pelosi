@@ -1,9 +1,11 @@
 import selenium
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 import time
 
-chrome_options = webdriver.ChromeOptions()
-chrome_options.add_argument('--headless')
+chrome_options = Options()
+chrome_options.headless = True
+#chrome_options.add_argument('--headless')
 chrome_options.add_argument('--no-sandbox')
 chrome_options.add_argument('--disable-dev-shm-usage')
 
@@ -15,8 +17,7 @@ def searchLine(myline, url="http://cti.voa.gov.uk/cti/inits.asp", chrome_options
     address = ' '.join(myline[7:10])
     print(address)
     try:
-        driver = webdriver.Chrome("chromedriver", chrome_options=chrome_options)#, options=options)
-        print(driver.capabilities['version'])
+        driver = webdriver.Chrome("chromedriver", options=chrome_options)#, options=options)
         driver.get(url)
         txtPC = driver.find_element_by_name("txtPostCode")
         driver.execute_script('arguments[0].value = arguments[1]', txtPC, postcode)
