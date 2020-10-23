@@ -16,6 +16,7 @@ def searchLine(myline, url="http://cti.voa.gov.uk/cti/inits.asp", chrome_options
     print(address)
     try:
         driver = webdriver.Chrome("chromedriver", chrome_options=chrome_options)#, options=options)
+        print(driver.capabilities['version'])
         driver.get(url)
         txtPC = driver.find_element_by_name("txtPostCode")
         driver.execute_script('arguments[0].value = arguments[1]', txtPC, postcode)
