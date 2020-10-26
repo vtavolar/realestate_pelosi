@@ -24,7 +24,7 @@ def searchLine(myline, url="http://cti.voa.gov.uk/cti/inits.asp", chrome_options
         driver.find_element_by_id('frmInitSForm').submit()
         scl_complex = driver.find_element_by_class_name('scl_complex')
     except:# selenium.common.exceptions.TimeoutException:
-        print('[ERROR] Something went wrong with this research. No response obtained for this entry, moving to the next one...')
+        print('[ERROR] Something went wrong with this search, a connection error was returned')
         if 'driver' in locals():
             driver.quit()
         return 'err'
@@ -42,7 +42,7 @@ def searchLine(myline, url="http://cti.voa.gov.uk/cti/inits.asp", chrome_options
         except selenium.common.exceptions.JavascriptException:
             break
         except:
-            print('[ERROR] Something went wrong with this research. No response obtained for this entry, moving to the next one...')
+            print('[ERROR] Something went wrong with this search, a connection error was returned')
             if 'driver' in locals():
                 driver.quit()
             return 'err'
@@ -93,14 +93,16 @@ def searchLine(myline, url="http://cti.voa.gov.uk/cti/inits.asp", chrome_options
     return answer
 
 
-def wrapSearchLine(myline, url="http://cti.voa.gov.uk/cti/inits.asp", chrome_options=chrome_options, sleep=30, maxRetries=3):
-    retries=0
+def wrapSearchLine(myline, url="http://cti.voa.gov.uk/cti/inits.asp", chrome_options=chrome_options, sleep=10, maxAttempts=2):
+    attempt=1
     ret=''
-    while retries<maxRetries:
+    while attempt<=maxAttempts:
+        if attempt>1:
+            print( '[INFO] Search attempt n.%s'%(attempt))
         ret = searchLine(myline, url, chrome_options)
         if ret == 'err':
-            retries=retries+1
-            print('Research of this entry caused an error. Waiting %ss before trying again with attempt n.%s'%(sleep,retries))
+            attempt=attempt+1
+            print('[ERROR] Connection problem. Waiting %ss before trying again.'%(sleep))
             time.sleep(30)
         else:
             break
