@@ -37,16 +37,15 @@ def searchLine(myline, url="http://cti.voa.gov.uk/cti/inits.asp", chrome_options
     while True:
         try:
             a = driver.execute_script("Next();")
-            try:
-                scl_complex = driver.find_element_by_class_name('scl_complex')
-                oldtext = oldtext +'\n'+ scl_complex.text
-            except:
-                print('[ERROR] Something went wrong with this research. No response obtained for this entry, moving to the next one...')
-                if 'driver' in locals():
-                    driver.quit()
-                return 'err'
+            scl_complex = driver.find_element_by_class_name('scl_complex')
+            oldtext = oldtext +'\n'+ scl_complex.text
         except selenium.common.exceptions.JavascriptException:
             break
+        except:
+            print('[ERROR] Something went wrong with this research. No response obtained for this entry, moving to the next one...')
+            if 'driver' in locals():
+                driver.quit()
+            return 'err'
     driver.quit()
     oldtext = oldtext.replace('Address Council Tax band Improvement indicator Local authority reference number\n','')
     while '  ' in oldtext:
