@@ -39,11 +39,11 @@ def searchLine(myline, url="http://cti.voa.gov.uk/cti/inits.asp", browser_option
         a=''
         try:
             a = driver.find_element_by_class_name('next')#driver.execute_script("Next();")
+            a.click()
+            time.sleep(2)
         except selenium.common.exceptions.NoSuchElementException:#selenium.common.exceptions.JavascriptException:
             break
         try:
-            a.click()
-            time.sleep(2)
             scl_complex = driver.find_element_by_class_name('scl_complex')
             oldtext = oldtext +'\n'+ scl_complex.text
         except:
