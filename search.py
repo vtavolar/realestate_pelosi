@@ -16,20 +16,18 @@ def searchLine(myline, url="http://cti.voa.gov.uk/cti/inits.asp", browser_option
     postcode = myline[3]#'SE1 0AJ'
     address = ' '.join(myline[7:10])
     print(address)
-    try:
-        driver = webdriver.Firefox(
-            options=browser_options,
-            firefox_binary="/kaggle/working/firefox/firefox/firefox")#, options=options)
-        driver.get(url)
-        txtPC = driver.find_element_by_name("txtPostCode")
-        driver.execute_script('arguments[0].value = arguments[1]', txtPC, postcode)
-        driver.find_element_by_id('frmInitSForm').submit()
-        scl_complex = driver.find_element_by_class_name('scl_complex')
-    except:# selenium.common.exceptions.TimeoutException:
-        print('[ERROR] Something went wrong with this search, a connection error was returned')
-        if 'driver' in locals():
-            driver.quit()
-        return 'err'
+    #    try:
+    driver = webdriver.Firefox(options=browser_options, firefox_binary="/kaggle/working/firefox/firefox/firefox")#, options=options)
+    driver.get(url)
+    txtPC = driver.find_element_by_name("txtPostCode")
+    driver.execute_script('arguments[0].value = arguments[1]', txtPC, postcode)
+    driver.find_element_by_id('frmInitSForm').submit()
+    scl_complex = driver.find_element_by_class_name('scl_complex')
+    ##except:# selenium.common.exceptions.TimeoutException:
+    ##    print('[ERROR] Something went wrong with this search, a connection error was returned')
+    ##    if 'driver' in locals():
+    ##        driver.quit()
+    ##    return 'err'
     oldtext = scl_complex.text if 'scl_complex' in locals() else ''
     if oldtext == '':
         answer='err'
