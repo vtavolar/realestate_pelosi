@@ -22,7 +22,7 @@ def searchLine(myline, url="http://cti.voa.gov.uk/cti/inits.asp", browser_option
     txtPC = driver.find_element_by_name("txtPostCode")
     driver.execute_script('arguments[0].value = arguments[1]', txtPC, postcode)
     driver.find_element_by_id('frmInitSForm').submit()
-    print(driver.page_source.encode("utf-8"))
+    time.sleep(1.5)
     scl_complex = driver.find_element_by_class_name('scl_complex')
     ##except:# selenium.common.exceptions.TimeoutException:
     ##    print('[ERROR] Something went wrong with this search, a connection error was returned')
