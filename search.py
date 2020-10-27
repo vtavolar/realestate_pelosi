@@ -41,6 +41,7 @@ def searchLine(myline, url="http://cti.voa.gov.uk/cti/inits.asp", browser_option
 #            //*[@id="Content"]/div/div[2]/div/div[2]/div/a
             a = driver.find_element_by_class_name('next')#driver.execute_script("Next();")
             driver.execute_script('arguments[0].scrollIntoView(true)', a)
+            time.sleep(5)
             a.click()
             time.sleep(2)
         except selenium.common.exceptions.NoSuchElementException:#selenium.common.exceptions.JavascriptException:
