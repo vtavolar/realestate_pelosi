@@ -44,7 +44,7 @@ def searchLine(myline, url="http://cti.voa.gov.uk/cti/inits.asp", browser_option
             time.sleep(5)
             a.click()
             time.sleep(2)
-        except selenium.common.exceptions.NoSuchElementException:#selenium.common.exceptions.JavascriptException:
+        except (selenium.common.exceptions.NoSuchElementException,selenium.common.exceptions.ElementNotInteractableException) as e:#selenium.common.exceptions.JavascriptException:
             break
         try:
             scl_complex = driver.find_element_by_class_name('scl_complex')
