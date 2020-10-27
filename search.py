@@ -17,7 +17,9 @@ def searchLine(myline, url="http://cti.voa.gov.uk/cti/inits.asp", browser_option
     address = ' '.join(myline[7:10])
     print(address)
     try:
-        driver = webdriver.Firefox("chromedriver", options=browser_options)#, options=options)
+        driver = webdriver.Firefox(
+            options=browser_options,
+            firefox_binary="/kaggle/working/firefox/firefox/firefox")#, options=options)
         driver.get(url)
         txtPC = driver.find_element_by_name("txtPostCode")
         driver.execute_script('arguments[0].value = arguments[1]', txtPC, postcode)
