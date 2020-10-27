@@ -66,6 +66,8 @@ def searchLine(myline, url="http://cti.voa.gov.uk/cti/inits.asp", browser_option
         res.append(t)
 	
     answer='notFound'
+    print('result length',len(res))
+    print('result',res)
     for t in res:
         #compare to PAON
         if t[0].split(',')[0] == myline[7]:
