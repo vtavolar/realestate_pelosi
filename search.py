@@ -37,6 +37,7 @@ def searchLine(myline, url="http://cti.voa.gov.uk/cti/inits.asp", browser_option
         return answer
     while True:
         try:
+            time.sleep(2)
             a = driver.execute_script("Next();")
             scl_complex = driver.find_element_by_class_name('scl_complex')
             oldtext = oldtext +'\n'+ scl_complex.text
