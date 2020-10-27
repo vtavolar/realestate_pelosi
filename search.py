@@ -5,26 +5,23 @@ import time
 
 browser_options = Options()
 browser_options.headless = True
-#browser_options.add_argument('--headless')
 browser_options.add_argument('--no-sandbox')
 browser_options.add_argument('--disable-dev-shm-usage')
 
 
 def searchLine(myline, url="http://cti.voa.gov.uk/cti/inits.asp", browser_options=browser_options):
     myline = myline.replace('"','').split(',')
-    print(myline)
-    postcode = myline[3]#'SE1 0AJ'
+    postcode = myline[3]
     address = ' '.join(myline[7:10])
-    print(address)
     try:
-        driver = webdriver.Firefox(options=browser_options, firefox_binary="/kaggle/working/firefox/firefox/firefox")#, options=options)
+        driver = webdriver.Firefox(options=browser_options, firefox_binary="/kaggle/working/firefox/firefox/firefox")
         driver.get(url)
         txtPC = driver.find_element_by_name("txtPostCode")
         driver.execute_script('arguments[0].value = arguments[1]', txtPC, postcode)
         driver.find_element_by_id('frmInitSForm').submit()
         time.sleep(1.5)
         scl_complex = driver.find_element_by_class_name('scl_complex')
-    except:# selenium.common.exceptions.TimeoutException:
+    except:
         print('[ERROR] Something went wrong with this search, a connection error was returned')
         if 'driver' in locals():
             driver.quit()
@@ -38,14 +35,9 @@ def searchLine(myline, url="http://cti.voa.gov.uk/cti/inits.asp", browser_option
     while True:
         a=''
         try:
-#            //*[@id="Content"]/div/div[2]/div/div[2]/div/a
-#            a = driver.find_element_by_class_name('next')
-#            driver.execute_script('arguments[0].scrollIntoView(true)', a)
-#            time.sleep(1.5)
-#            a.click()
             driver.execute_script("Next();")
             time.sleep(2)
-        except selenium.common.exceptions.JavascriptException: #(selenium.common.exceptions.NoSuchElementException,selenium.common.exceptions.ElementNotInteractableException) as e:
+        except selenium.common.exceptions.JavascriptException:
             break
         try:
             scl_complex = driver.find_element_by_class_name('scl_complex')
@@ -74,29 +66,21 @@ def searchLine(myline, url="http://cti.voa.gov.uk/cti/inits.asp", browser_option
         res.append(t)
 	
     answer='notFound'
-    print('result length',len(res))
-    print('result',res)
     for t in res:
         #compare to PAON
         if t[0].split(',')[0] == myline[7]:
-            print(t[0])
-            print(myline[7])
             answer=t[1]
             break
     if answer=='notFound':
         for t in res:
             #if still not found, compare to SAON
             if t[0].split(',')[0] == myline[8]:
-                print(t[0])
-                print(myline[8])
                 answer=t[1]
                 break
     if answer=='notFound':
         for t in res:
             #if still again not found, allow partial match to SAON
             if t[0].split(',')[0] in myline[8].split():
-                print(t[0])
-                print(myline[8])
                 answer=t[1]
                 break        
     print('Line, Answer: %s, %s'%(myline,answer))        
