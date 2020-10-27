@@ -98,7 +98,7 @@ def wrapSearchLine(myline, url="http://cti.voa.gov.uk/cti/inits.asp", browser_op
         if ret == 'err':
             attempt=attempt+1
             print('[ERROR] Connection problem. Waiting %ss before trying again.'%(sleep))
-            time.sleep(30)
+            time.sleep(sleep)
         else:
             break
     return ret
