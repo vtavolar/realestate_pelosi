@@ -1,23 +1,23 @@
 import selenium
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.firefox.options import Options
 import time
 
-chrome_options = Options()
-chrome_options.headless = True
-#chrome_options.add_argument('--headless')
-chrome_options.add_argument('--no-sandbox')
-chrome_options.add_argument('--disable-dev-shm-usage')
+browser_options = Options()
+browser_options.headless = True
+#browser_options.add_argument('--headless')
+browser_options.add_argument('--no-sandbox')
+browser_options.add_argument('--disable-dev-shm-usage')
 
 
-def searchLine(myline, url="http://cti.voa.gov.uk/cti/inits.asp", chrome_options=chrome_options):
+def searchLine(myline, url="http://cti.voa.gov.uk/cti/inits.asp", browser_options=browser_options):
     myline = myline.replace('"','').split(',')
     print(myline)
     postcode = myline[3]#'SE1 0AJ'
     address = ' '.join(myline[7:10])
     print(address)
     try:
-        driver = webdriver.Chrome("chromedriver", options=chrome_options)#, options=options)
+        driver = webdriver.Firefox("chromedriver", options=browser_options)#, options=options)
         driver.get(url)
         txtPC = driver.find_element_by_name("txtPostCode")
         driver.execute_script('arguments[0].value = arguments[1]', txtPC, postcode)
@@ -93,13 +93,13 @@ def searchLine(myline, url="http://cti.voa.gov.uk/cti/inits.asp", chrome_options
     return answer
 
 
-def wrapSearchLine(myline, url="http://cti.voa.gov.uk/cti/inits.asp", chrome_options=chrome_options, sleep=10, maxAttempts=2):
+def wrapSearchLine(myline, url="http://cti.voa.gov.uk/cti/inits.asp", browser_options=browser_options, sleep=10, maxAttempts=2):
     attempt=1
     ret=''
     while attempt<=maxAttempts:
         if attempt>1:
             print( '[INFO] Search attempt n.%s'%(attempt))
-        ret = searchLine(myline, url, chrome_options)
+        ret = searchLine(myline, url, browser_options)
         if ret == 'err':
             attempt=attempt+1
             print('[ERROR] Connection problem. Waiting %ss before trying again.'%(sleep))
