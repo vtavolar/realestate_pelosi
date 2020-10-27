@@ -19,6 +19,7 @@ def searchLine(myline, url="http://cti.voa.gov.uk/cti/inits.asp", browser_option
     #    try:
     driver = webdriver.Firefox(options=browser_options, firefox_binary="/kaggle/working/firefox/firefox/firefox")#, options=options)
     driver.get(url)
+    print(driver.page_source.encode("utf-8"))
     txtPC = driver.find_element_by_name("txtPostCode")
     driver.execute_script('arguments[0].value = arguments[1]', txtPC, postcode)
     driver.find_element_by_id('frmInitSForm').submit()
