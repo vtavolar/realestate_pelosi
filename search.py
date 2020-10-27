@@ -36,13 +36,16 @@ def searchLine(myline, url="http://cti.voa.gov.uk/cti/inits.asp", browser_option
         print()
         return answer
     while True:
+        a=''
         try:
-            a = driver.find_element_by_class_name('next').click()#driver.execute_script("Next();")
+            a = driver.find_element_by_class_name('next')#driver.execute_script("Next();")
+        except selenium.common.exceptions.NoSuchElementException:#selenium.common.exceptions.JavascriptException:
+            break
+        try:
+            a.click()
             time.sleep(2)
             scl_complex = driver.find_element_by_class_name('scl_complex')
             oldtext = oldtext +'\n'+ scl_complex.text
-        except selenium.common.exceptions.NoSuchElementException:#selenium.common.exceptions.JavascriptException:
-            break
         except:
             print('[ERROR] Something went wrong with this search, a connection error was returned')
             if 'driver' in locals():
