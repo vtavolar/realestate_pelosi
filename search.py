@@ -60,6 +60,7 @@ def searchLine(myline, url="http://cti.voa.gov.uk/cti/inits.asp", browser_option
         return answer
     for line in lines:
         ls = line.split(' ')
+        if len(ls)<2: continue #protection against empty lines in server answer
         if ls[-2] == 'Yes': ##if present, ignore 'Improvement indicator' field
             ls.pop(-2)
         t = (' '.join(ls[:-2]), ls[-2], ls[-1])
