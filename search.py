@@ -11,6 +11,9 @@ browser_options.add_argument('--disable-dev-shm-usage')
 
 def searchLine(myline, url="http://cti.voa.gov.uk/cti/inits.asp", browser_options=browser_options):
     myline = myline.replace('"','').split(',')
+    if len(myline)!=16:
+        print('[FATAL] Wrong format of input data, cannot perform research.')
+        return 'fatalErr'
     postcode = myline[3]
     address = ' '.join(myline[7:10])
     try:
